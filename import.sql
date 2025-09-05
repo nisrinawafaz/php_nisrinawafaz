@@ -1,31 +1,10 @@
-CREATE DATABASE IF NOT EXISTS 'testdb';
-USE 'testdb';
-
-CREATE TABLE IF NOT EXISTS `hobi` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `person_id` INT NOT NULL,
-    `hobi` VARCHAR(200) NOT NULL,
-    FOREIGN KEY (`person_id`) REFERENCES `person`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-INSERT INTO `hobi` (`person_id`, `hobi`) VALUES
-(1, 'Futsal'),
-(1, 'Soccer'),
-(1, 'Tenis Meja'),
-(2, 'Basket'),
-(2, 'Renang'),
-(3, 'Futsal'),
-(3, 'Membaca'),
-(3, 'Renang'),
-(3, 'Game'),
-(4, 'Renang'),
-(5, 'Jalan-Jalan');
-
+CREATE DATABASE IF NOT EXISTS testdb;
+USE testdb;
 
 CREATE TABLE IF NOT EXISTS `person` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `nama` VARCHAR(200) NOT NULL,
-    `alamat` VARCHAR(200) NOT NULL,
+    `alamat` VARCHAR(200) NOT NULL
 );
 
 INSERT INTO `person` (`nama`, `alamat`) VALUES
@@ -117,3 +96,26 @@ INSERT INTO `person` (`nama`, `alamat`) VALUES
 ('Mikasa', 'Paradis'),
 ('Cak Gembul x yd f', 'Surabaya gg gg'),
 ('Mahdy', 'Cimahi');
+
+
+CREATE TABLE IF NOT EXISTS `hobi` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `person_id` INT NOT NULL,
+    `hobi` VARCHAR(200) NOT NULL,
+    FOREIGN KEY (`person_id`) REFERENCES `person`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO `hobi` (`person_id`, `hobi`) VALUES
+(1, 'Futsal'),
+(1, 'Soccer'),
+(1, 'Tenis Meja'),
+(2, 'Basket'),
+(2, 'Renang'),
+(3, 'Futsal'),
+(3, 'Membaca'),
+(3, 'Renang'),
+(3, 'Game'),
+(4, 'Renang'),
+(5, 'Jalan-Jalan');
+
+
