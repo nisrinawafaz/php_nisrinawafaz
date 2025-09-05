@@ -17,21 +17,34 @@ $fields = [
 ];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $data = $_SESSION['form_data'] ?? [];
-    $_SESSION['form_data'] = array_merge($data, array_intersect_key($_POST, $fields));
-    $_SESSION['step']++;
+    $step = $_POST['step'];
+    $next = $step + 1;
+
+    $current_field = array_keys($fields)[$step];
+    if (isset($_POST[$current_field])) {
+        $_SESSION['data'][$current_field] = $_POST[$current_field];
+    }
+
+    $_SESSION['step'] = $next;
+
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
 }
 
 if ($_SESSION['step'] >= count($fields)) {
-    foreach ($_SESSION['form_data'] as $key => $value) {
+    foreach ($_SESSION['data'] as $key => $value) {
         echo "<p><strong>" . ucfirst($key) . ":</strong> " . htmlspecialchars($value) . "</p>";
     }
+
+    session_destroy();
 } else {
-    $current_field = array_keys($fields)[$_SESSION['step']];
+    $step = $_SESSION['step'];
+    $current_field = array_keys($fields)[$step];
     $input_type = $fields[$current_field];
     echo "<form method='POST'>";
     echo "<label for='$current_field'>" . ucfirst($current_field) . " Anda :</label>";
     echo "<input type='$input_type' name='$current_field' id='$current_field' required>";
+    echo "<input type='hidden' name='step' value='$step'/>";
     echo "<br><br>";
     echo "<button type='submit'>SUBMIT</button>";
     echo "</form>";
